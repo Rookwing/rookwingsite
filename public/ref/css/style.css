@@ -1,0 +1,175 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap");
+
+:root {
+	--primary-color: #002a53;
+	--secondary-color: #aaaaaa;
+	--dark-color: #000b14;
+	--light-color: #f4f4f4;
+	--success-color: #5cb85c;
+	--error-color: #d9534f;
+}
+
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	background-color: var(--secondary-color);
+	font-family: "Open Sans", sans-serif;
+	font-weight: 700;
+	color: #333;
+	line-height: 1.6;
+}
+
+.loginBG {
+	background-color: var(--primary-color);
+	color: white;
+}
+
+.LoginScreen {
+	background-color: var(--primary-color);
+	color: white;
+}
+.LoginScreen .flex {
+	flex-direction: column;
+}
+.LoginScreen .logo {
+	height: 100px;
+}
+
+.navbar {
+	background-color: var(--primary-color);
+	color: white;
+}
+
+.navbar ul {
+	display: flex;
+}
+
+.navbar a {
+	color: white;
+	/*padding: 10px;*/
+	margin: 0 5px;
+	text-decoration: none;
+}
+
+.navbar a:hover {
+	border-bottom: 2px white solid;
+}
+
+.navbar .flex {
+	justify-content: space-between;
+}
+
+.logo {
+	height: 50px;
+	margin-bottom: 4px;
+	margin-top: -4px;
+}
+.loginlogo {
+	height: 150px;
+	margin-bottom: 0px;
+	margin-top: 50px;
+}
+
+ul {
+	list-style-type: none;
+}
+
+.blog {
+	height: auto;
+	margin: auto;
+	max-width: 900px;
+}
+
+.blog h1 {
+	text-align: center;
+}
+.blog-aside {
+	width: 50%;
+	min-width: 200px;
+}
+.blog-body {
+	width: 100%;
+}
+
+.login-form {
+	position: relative;
+	top: 60px;
+	height: 350px;
+	width: 400px;
+	padding: 40px;
+	z-index: 100;
+	justify-self: flex-end;
+	animation: slideInFromRight 1s ease-in;
+	-webkit-animation: slideInFromRight 1s ease-in;
+}
+
+.login-form .form-control {
+	margin: 30px 0;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+	border: 0;
+	border-bottom: 1px solid #b4becb;
+	width: 100%;
+	padding: 5px;
+	font-size: 16px;
+	background-color: var(--dark-color);
+	color: var(--light-color);
+}
+
+.login-form input[type="submit"] {
+	border: 0;
+	border-bottom: 1px solid #b4becb;
+	width: 100%;
+	height: 50px;
+	padding: 3px;
+	font-size: 16px;
+}
+
+.login-form input:focus {
+	outline: none;
+}
+
+.invalidPass {
+	padding-top: 1rem;
+	color: var(--error-color);
+}
+
+/* Tablets and under */
+@media (max-width: 768px) {
+	.navbar {
+		height: 100px;
+	}
+	.blog {
+		height: auto;
+	}
+	.navbar .flex {
+		flex-direction: column;
+	}
+	.navbar ul {
+		padding: 10px;
+		background-color: rgba(0, 0, 0, 0.1);
+		width: 100%;
+	}
+	.logo {
+		height: 50px;
+		margin-bottom: 0px;
+	}
+}
+
+/* Mobile */
+@media (max-width: 500px) {
+	.blog {
+		flex-direction: column;
+	}
+
+	.LoginScreen .flex {
+		flex-direction: column;
+		padding-top: 0%;
+	}
+}

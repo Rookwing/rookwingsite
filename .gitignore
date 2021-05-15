@@ -1,0 +1,5 @@
+.env
+test.ps1
+ignore/*
+node_modules/*
+.vscode/*

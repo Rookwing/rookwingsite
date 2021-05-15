@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="./css/style.css" />
+		<link rel="stylesheet" href="./css/util.css" />
+		<title>Rookwing - Login</title>
+	</head>
+	<body class="loginBG">
+		<section class="LoginScreen">
+			<div class="flex">
+				<img src="/l/rwlogo.png" alt="" class="loginlogo" />
+                <div class="login-form card">
+                        <h2 class="text-center">LOGIN</h2>
+                        <form action='auth' method="POST">
+                            <div class="form-control">
+                                <input class="text-center" type="text" name="username" placeholder="Username" required />
+                            </div>
+                            <div class="form-control">
+                                <input class="text-center"
+                                    type="password"
+                                    name="password"
+                                    placeholder="Password"
+                                    required
+                                />
+                                <p id="invalidPassTest" class="text-center" hidden=true>Invalid Username/Password</p>
+                            </div>
+                            <Input type="submit" value="send" class="btn btn-primary"></Input>
+                        </form>
+                </div>
+			</div>
+		</section>
+	</body>
+</html>
