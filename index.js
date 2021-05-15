@@ -135,7 +135,7 @@ app.post("/auth", async (request, response) => {
 	var passwordHash = crypto.createHash("sha256").update(password).digest("hex");
 
 	if (username && passwordHash) {
-		const stmt = `SELECT 1 as Result FROM UserData.User where LoginName = ${username} and PasswordHash = ${passwordHash}`;
+		const stmt = `SELECT 1 as Result FROM UserData.User where LoginName = \'${username}\' and PasswordHash = \'${passwordHash}\'`;
 		console.log(stmt);
 
 		const loginQuery = pool.query(stmt, [username, passwordHash]);
