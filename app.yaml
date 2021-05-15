@@ -8,7 +8,6 @@ env_variables:
   DB_PASS: "Clemson1029!"
   DB_NAME: "UserData"
   DB_SOCKET_PATH: "/cloudsql/"
-  DB_HOST: "35.202.211.137"
   DB_PORT: 3306
   HOST: "127.0.0.1"
   CLOUD_SQL_CONNECTION_NAME: "rookwingwebsite:us-central1:rooksite-db"

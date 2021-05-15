@@ -236,4 +236,4 @@ app.get("/logout", function (request, response) {
 
 console.log("Server Running on " + PORT);
 
-var host = app.listen(PORT, process.env.HOST);
+app.listen(PORT, process.env.HOST);
