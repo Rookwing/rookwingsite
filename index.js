@@ -204,6 +204,13 @@ io.on("connection", (socket) => {
 		thisRoom = Newuser.roomCode;
 		console.log(Newuser);
 		socket.join(thisRoom);
+
+		io.to(thisRoom).emit("system message", {
+			value: session.username + " has joined the chat",
+			id: "systemmsg",
+			name: "system",
+			roomCode: thisRoom,
+		});
 	});
 
 	socket.on("chat message", (data) => {

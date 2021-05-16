@@ -32,16 +32,18 @@
 .systemDiv {
 	background-color: lightgray;
 	float: none;
-	width: 50%;
+	width: 40vw;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .chatbubble {
 	color: var(--dark-color);
 	border-radius: 10px;
 	box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
-	padding: 5px;
-	min-width: 30vw;
-	max-width: 90vw;
+	padding: 5px 10px;
+	min-width: 15vw;
+	max-width: 30vw;
 }
 
 .messages {
@@ -50,6 +52,7 @@
 	gap: 5px;
 	margin: 0 0 10px;
 	min-height: 75vh;
+	min-width: 30vw;
 	max-width: 90vw;
 	grid-auto-rows: max-content;
 	overflow-y: auto;
