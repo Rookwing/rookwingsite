@@ -5,26 +5,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="./css/style.css" />
 		<link rel="stylesheet" href="./css/util.css" />
+		<link rel="stylesheet" href="./css/game.css" />
 		<title>Rookwing</title>
-
-		<!-- include jquery -->
-		<script>
-			/**
-			 * create a function in the now namespace
-			 * that the server can call
-			 */
-			now.receiveMessage = function (message) {
-				$("#messages").append("<p>" + message + "</p>");
-			};
-
-			/**
-			 * add a click event to call a function in
-			 * the server's now namespace
-			 */
-			$("#send").click(function () {
-				now.sendMessage($("#message").val());
-			});
-		</script>
 	</head>
 	<body>
 		<section class="navbar">
@@ -40,10 +22,138 @@
 				</nav>
 			</div>
 		</section>
-		<section class="game container">
-			<div id="messages"></div>
-			<input type="text" id="message" />
-			<input type="button" id="send" value="Send" />
+		<section class="game-window container">
+			<div class="chat-window center">
+				<ul class="messages" id="messages">
+					<li>
+						<div class="yourDiv chatbubble">
+							<p class="you">Zack</p>
+							<p class="message">Hey Man Hows it going</p>
+							<p class="time">07:22</p>
+						</div>
+					</li>
+					<li>
+						<div class="myDiv chatbubble">
+							<p class="me">You</p>
+							<p class="message">Pretty good you tryina play?</p>
+							<p class="time">07:22</p>
+						</div>
+					</li>
+				</ul>
+				<form class="message-input">
+					<input type="text" id="m" />
+					<input type="submit" id="submitButton" value="submit" />
+				</form>
+			</div>
 		</section>
 	</body>
+	<script src="/socket.io/socket.io.js"></script>
+	<script
+		src="https://code.jquery.com/jquery-3.5.1.js"
+		integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+		crossorigin="anonymous"
+	></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"></script>
+	<script>
+		let room = prompt("Room Code");
+		let ID = "";
+		var socket = io();
+		//send event that user has joined room
+		socket.emit("join room", { roomCode: room });
+
+		//receive data from server.
+		socket.on("send data", (data) => {
+			ID = data.id; //ID will be used later
+			//console.log("My ID:" + ID);
+		});
+		$("#m").focus();
+		//when form is submitted, capture the input value and then send it to server
+		document
+			.getElementsByTagName("form")[0]
+			.addEventListener("submit", function (event) {
+				event.preventDefault();
+				socket.emit("chat message", {
+					value: document.getElementById("m").value,
+				});
+
+				document.getElementById("m").value = "";
+			});
+		socket.on("chat message", (data) => {
+			console.log(data.name + ": " + data.roomCode + ": " + data.id);
+			displayMessage(data);
+		});
+
+		socket.on("system message", (data) => {
+			console.log("System Message: " + data.message);
+			displaySystemMessage(data);
+		});
+
+		function displayMessage(data) {
+			let authorClass = "";
+			let divClass = "";
+			//verify that the user ID and the message sent ID is similar
+			if (data.id === ID) {
+				authorClass = "me";
+				divClass = "myDiv chatbubble";
+			} else if (data.id === "systemmsg") {
+				authorClass = "system";
+				divClass = "systemDiv chatbubble";
+			} else {
+				authorClass = "you";
+				divClass = "yourDiv chatbubble";
+			}
+			const div = document.createElement("div");
+			div.className = divClass;
+			const li = document.createElement("li");
+			const p = document.createElement("p");
+			p.className = "time";
+			p.innerText = moment().format("hh:mm");
+			div.innerHTML =
+				'<p class="' +
+				authorClass +
+				'">' +
+				data.name +
+				"</p>" +
+				'<p class="message"> ' +
+				data.data.value +
+				"</p>";
+			div.appendChild(p);
+			li.appendChild(div);
+
+			document.getElementById("messages").appendChild(li);
+			//scroll to the bottom
+			window.scrollTo(0, document.body.scrollHeight);
+		}
+
+		function displaySystemMessage(data) {
+			let authorClass = "";
+			let divClass = "";
+			//verify that the user ID and the message sent ID is similar
+			if (data.id === "systemmsg") {
+				authorClass = "system";
+				divClass = "systemDiv chatbubble";
+			}
+			const div = document.createElement("div");
+			div.className = divClass;
+			const li = document.createElement("li");
+			const p = document.createElement("p");
+			p.className = "time";
+			p.innerText = moment().format("hh:mm");
+			div.innerHTML =
+				'<p class="' +
+				authorClass +
+				'">' +
+				data.name +
+				"</p>" +
+				'<p class="message"> ' +
+				data.value +
+				"</p>";
+			div.appendChild(p);
+			li.appendChild(div);
+
+			document.getElementById("messages").appendChild(li);
+			//scroll to the bottom
+			window.scrollTo(0, document.body.scrollHeight);
+		}
+	</script>
 </html>
