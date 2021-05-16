@@ -17,11 +17,13 @@
   ],
   "dependencies": {
     "@google-cloud/storage": "^5.8.5",
+    "ejs": "^3.1.6",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "express-sessions": "^1.0.1",
     "mysql": "^2.18.1",
-    "promise-mysql": "^5.0.3"
+    "promise-mysql": "^5.0.3",
+    "socket.io": "^4.1.1"
   },
   "devDependencies": {
     "dotenv": "^9.0.2"

@@ -6,6 +6,25 @@
 		<link rel="stylesheet" href="./css/style.css" />
 		<link rel="stylesheet" href="./css/util.css" />
 		<title>Rookwing</title>
+
+		<!-- include jquery -->
+		<script>
+			/**
+			 * create a function in the now namespace
+			 * that the server can call
+			 */
+			now.receiveMessage = function (message) {
+				$("#messages").append("<p>" + message + "</p>");
+			};
+
+			/**
+			 * add a click event to call a function in
+			 * the server's now namespace
+			 */
+			$("#send").click(function () {
+				now.sendMessage($("#message").val());
+			});
+		</script>
 	</head>
 	<body>
 		<section class="navbar">
@@ -16,26 +35,15 @@
 						<li><a href="home">Home</a></li>
 						<li><a href="about">About Us</a></li>
 						<li><a href="contact">Contact</a></li>
-						<li><a href="game">Game</a></li>
 						<li><a href="login">LOGIN</a></li>
 					</ul>
 				</nav>
 			</div>
 		</section>
-		<section class="blog">
-			<div class="blog-body flex">
-				<ul class="container">
-					<article class="card">
-						<h1 class="lg">Contact form</h1>
-						<p class="md">Fill out your details and we'll get back to you!</p>
-					</article>
-					<article class="card">
-						<h1 class="lg">Contact info</h1>
-						<p class="md">Phone:</p>
-						<p class="md">Email:</p>
-					</article>
-				</ul>
-			</div>
+		<section class="game container">
+			<div id="messages"></div>
+			<input type="text" id="message" />
+			<input type="button" id="send" value="Send" />
 		</section>
 	</body>
 </html>

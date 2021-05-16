@@ -12,22 +12,25 @@
 			<div class="flex">
 				<img src="/l/rwlogo.png" alt="" class="loginlogo" />
                 <div class="login-form card">
-                        <h2 class="text-center">LOGIN</h2>
-                        <form action='auth' method="POST">
-                            <div class="form-control">
-                                <input class="text-center" type="text" name="username" placeholder="Username" required />
-                            </div>
-                            <div class="form-control">
-                                <input class="text-center"
-                                    type="password"
-                                    name="password"
-                                    placeholder="Password"
-                                    required
-                                />
-                                <p id="invalidPassTest" class="text-center" hidden=true>Invalid Username/Password</p>
-                            </div>
-                            <Input type="submit" value="send" class="btn btn-primary"></Input>
-                        </form>
+                    <h2 class="text-center">LOGIN</h2>
+                    <form action='auth' method="POST">
+                        <div class="form-control">
+                            <input class="text-center" type="text" name="username" placeholder="Username" required />
+                        </div>
+                        <div class="form-control">
+                            <input class="text-center"
+                                type="password"
+                                name="password"
+                                placeholder="Password"
+                                required
+                            />
+                            <p id="invalidPassTest" class="text-center" hidden=true>Invalid Username/Password</p>
+                        </div>
+                        <Input type="submit" value="send" class="btn btn-primary"></Input>
+                    </form>
+                    <div class="flex loginHelp">
+                        <a class='text-center' href =# >Forgot Password</a>
+                    </div>
                 </div>
 			</div>
 		</section>
