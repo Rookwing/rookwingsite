@@ -115,6 +115,11 @@
 	text-align: center;
 }
 
+.center {
+	vertical-align: middle;
+	text-align: center;
+}
+
 /* Alert */
 .alert {
 	background-color: var(--light-color);
