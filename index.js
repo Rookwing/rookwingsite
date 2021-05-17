@@ -7,6 +7,7 @@ const crypto = require("crypto");
 const { response, request } = require("express");
 const { Console } = require("console");
 const { createPool, Login } = require("./server.js");
+const { joinUser, removeUser } = require("./users");
 
 if (process.env.NODE_ENV != "production") {
 	var dotenv = require("dotenv").config();
@@ -17,15 +18,16 @@ var PORT = process.env.PORT;
 var app = express();
 var server = app.listen(PORT, process.env.HOST);
 const io = require("socket.io")(server);
-const { joinUser, removeUser } = require("./users");
 
 const sessionMiddle = session({
 	secret: "sydneynumberone",
 	name: "sessionID",
 	resave: false,
 	saveUninitialized: false,
-	cookie: { maxAge: 60000 },
+	cookie: { maxAge: 1800000 },
 });
+
+//app.use(	session({		secret: "sydneynumberone",		name: "sessionID",		resave: false,		saveUninitialized: false,		cookie: { maxAge: 1800000 },	}));
 
 app.use(sessionMiddle);
 io.use((socket, next) => {
@@ -56,42 +58,13 @@ app.use(async (req, res, next) => {
 	}
 });
 
-app.use(
-	session({
-		secret: "sydneynumberone",
-		name: "sessionID",
-		resave: false,
-		saveUninitialized: false,
-	})
-);
+app.get("*", function (request, response) {
+	request.session.resetMaxAge;
+	request.next();
+});
 
 app.get("/", function (request, response) {
 	response.redirect("/login");
-});
-
-app.post("/auth", async (request, response) => {
-	pool = pool || (await createPool());
-
-	var username = request.body.username;
-	var password = request.body.password;
-	var passwordHash = crypto.createHash("sha256").update(password).digest("hex");
-
-	if (username && passwordHash) {
-		const loginResult = await Login(pool, username, passwordHash);
-
-		if (loginResult[0].isActive == 1) {
-			request.session.loggedin = true;
-			request.session.username = username;
-			response.redirect("/home");
-		} else {
-			//console.log("Incorrect Login/Pass");
-			response.redirect("/login");
-		}
-		response.end();
-	} else {
-		response.send("Please enter Username and Password!");
-		response.end();
-	}
 });
 
 app.get("/home", function (request, response) {
@@ -109,36 +82,7 @@ app.get("/home", function (request, response) {
 	}
 });
 
-app.get("/contact", function (request, response) {
-	if (request.session.loggedin) {
-		fs.readFile(__dirname + "/public/contact.html", function (err, data) {
-			if (err) {
-				response.writeHead(500);
-				return res.end("Error Loading contact.html");
-			}
-			response.writeHead(200);
-			response.end(data);
-		});
-	} else {
-		response.redirect("/login");
-	}
-});
-
-app.get("/about", function (request, response) {
-	if (request.session.loggedin) {
-		fs.readFile(__dirname + "/public/about.html", function (err, data) {
-			if (err) {
-				response.writeHead(500);
-				return res.end("Error Loading about.html");
-			}
-			response.writeHead(200);
-			response.end(data);
-		});
-	} else {
-		response.redirect("/login");
-	}
-});
-
+// #region Authentication
 app.get("/login", function (request, response) {
 	if (request.session.loggedin) {
 		//console.log("Already Logged In");
@@ -167,6 +111,33 @@ app.get("/logout", function (request, response) {
 	}
 });
 
+app.post("/auth", async (request, response) => {
+	pool = pool || (await createPool());
+
+	var username = request.body.username;
+	var password = request.body.password;
+	var passwordHash = crypto.createHash("sha256").update(password).digest("hex");
+
+	if (username && passwordHash) {
+		const loginResult = await Login(pool, username, passwordHash);
+
+		if (loginResult[0].isActive == 1) {
+			request.session.loggedin = true;
+			request.session.username = username;
+			response.redirect("/home");
+		} else {
+			//console.log("Incorrect Login/Pass");
+			response.redirect("/login");
+		}
+		response.end();
+	} else {
+		response.send("Please enter Username and Password!");
+		response.end();
+	}
+});
+// #endregion
+
+// #region /Game
 app.get("/game", function (request, response) {
 	if (request.session.loggedin) {
 		fs.readFile(__dirname + "/public/game.html", function (err, data) {
@@ -246,3 +217,4 @@ io.on("connection", (socket) => {
 		//console.log("disconnected");
 	});
 });
+// #endregion

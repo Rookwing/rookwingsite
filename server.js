@@ -69,10 +69,18 @@ async function createPool() {
 	}
 }
 
+async function closePool(_pool) {
+	try {
+		return mysql.pool.end(_pool);
+	} catch (error) {
+		throw error;
+	}
+}
+
 async function Login(_pool, _username, _passhash) {
 	try {
 		const loginQuery = await _pool.query(
-			"SELECT isActive FROM UserData.User where LoginName = ? and PasswordHash = ?",
+			"SELECT isActive FROM User where LoginName = ? and PasswordHash = ?",
 			[_username, _passhash]
 		);
 		const loginResult = loginQuery;

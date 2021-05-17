@@ -5,12 +5,12 @@ instance_class: F2
 env_variables:
   NODE_ENV: "production"
   DB_USER: "root"
-  DB_PASS: "Clemson1029!"
-  DB_NAME: "UserData"
+  DB_PASS: "_root123"
+  DB_NAME: "rookdb"
   DB_SOCKET_PATH: "/cloudsql/"
   DB_PORT: 3306
   HOST: "127.0.0.1"
-  CLOUD_SQL_CONNECTION_NAME: "rookwingwebsite:us-central1:rooksite-db"
+  CLOUD_SQL_CONNECTION_NAME: "rookwingwebsite:us-central1:rookdb"
 
 handlers:
   - url: /.*
