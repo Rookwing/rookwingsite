@@ -1,27 +1,4 @@
 steps:
-  - name: "gcr.io/cloud-builders/git"
-    secretEnv: ["SSH_KEY"]
-    entrypoint: "bash"
-    args:
-      - -c
-      - |
-        echo "$$SSH_KEY" >> /root/.ssh/id_rsa
-        chmod 400 /root/.ssh/id_rsa
-        cp known_hosts.github /root/.ssh/known_hosts
-    volumes:
-      - name: "ssh"
-        path: /root/.ssh
-
-    # Clone the repository
-  - name: "gcr.io/cloud-builders/git"
-    args:
-      - clone
-      - --recurse-submodules
-      - git@github.com:Rookwing/rookwingsite
-    volumes:
-      - name: "ssh"
-        path: /root/.ssh
-
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: "bash"
     args:
@@ -30,8 +7,3 @@ steps:
         "gcloud config set app/cloud_build_timeout 1600 && gcloud app deploy",
       ]
     timeout: "1600s"
-
-availableSecrets:
-  secretManager:
-    - versionName: projects/rookwingwebsite/secrets/build-key-secret/versions/latest
-      env: "SSH_KEY"
